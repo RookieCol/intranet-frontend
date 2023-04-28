@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from 'react';
-
 import axios from 'axios';
 import { backend } from './utils/constants';
-
+import {Register} from './components/Register';
+import { Header } from './components/Header';
+import { useContext } from 'react';
+import { UserContext } from './context/UserContext';
 const App = () => {
   const [message, setMessage] = useState("");
+  const [token,setToken]= useContext(UserContext)
   useEffect(() => {
     const getWelcomeMessage = async () => {
       try {
@@ -20,9 +23,23 @@ const App = () => {
   }, []);
 
   return (
-    <div>
-      <h1>{message}</h1>
+    <>
+    <Header title={message}/>
+    <div className="colum">
+      <div className="colum m-5 is-two-thirds">
+        {
+        !token ? (
+          <div className="colums">
+            <Register />
+          </div>
+        ):(
+          <p>Table</p>
+        )}
+
+        <div className="colum"></div>
+      </div>
     </div>
+    </>
   );
 };
 
