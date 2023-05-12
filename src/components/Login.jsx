@@ -1,37 +1,37 @@
-import React, { useState, useContext } from "react";
-import ErrorMessage from "./ErrorMessage";
-import { UserContext } from "../context/UserContext";
+import React, { useState, useContext } from 'react';
+import ErrorMessage from './ErrorMessage';
+import { UserContext } from '../context/UserContext';
 import axios from 'axios';
-import { backend } from "../utils/constants";
+import { backend } from '../utils/constants';
 const Login = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [errorMessage, setErrorMessage] = useState("");
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
   const [, setToken] = useContext(UserContext);
 
   const submitLogin = async () => {
     try {
       const data = new URLSearchParams();
-      data.append('grant_type', '');
       data.append('username', email);
       data.append('password', password);
-      data.append('scope', '');
-      data.append('client_id', '');
-      data.append('client_secret', '');
-  
-      const response = await axios.post(`${backend}/api/token`, data.toString(), {
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded'
+
+      const response = await axios.post(
+        `${backend}/api/token`,
+        data.toString(),
+        {
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+          },
         }
-      });
-  
+      );
+
       setToken(response.data.access_token);
     } catch (error) {
       setErrorMessage(error.response.data.detail);
     }
-  }
+  };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = e => {
     e.preventDefault();
     submitLogin();
   };
@@ -47,7 +47,7 @@ const Login = () => {
               type="email"
               placeholder="Enter email"
               value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              onChange={e => setEmail(e.target.value)}
               className="input"
               required
             />
@@ -60,7 +60,7 @@ const Login = () => {
               type="password"
               placeholder="Enter password"
               value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              onChange={e => setPassword(e.target.value)}
               className="input"
               required
             />
